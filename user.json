@@ -1,0 +1,26 @@
+{
+    "builders": [{
+      "type": "amazon-ebs",
+      "region": "us-east-1",
+      "source_ami": "ami-02eac2c0129f6376b",
+      "instance_type": "t2.micro",
+      "ssh_username": "centos",
+      "ami_name": "centos-golden-image {{timestamp}}",
+      "ssh_keypair_name": "becks_bastion1",
+      "ssh_private_key_file":"/home/centos/.ssh/id_rsa"
+    }],
+    "provisioners": [
+     {
+        "type": "shell",
+           "inline":[
+               "sudo yum install httpd -y",
+               "sudo systemctl start httpd",
+               "sudo systemctl enable httpd"
+            ]
+      },
+      {
+        "type": "breakpoint",
+        "note": "Wait for you to delete"
+      }
+   ]
+  }
